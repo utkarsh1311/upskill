@@ -45,20 +45,16 @@ export const useChatbot = () => {
 				}
 
 				const callDetails = await response.json();
-				console.log("Call details:", callDetails);
 
 				if (callDetails.status === "ended") {
 					setState(prev => ({
 						...prev,
 						callSummary: callDetails.summary,
 					}));
-					console.log("Call has ended successfully");
 					return callDetails;
 				}
 
-				console.log(
-					`Call status is ${callDetails.status}, waiting ${RETRY_DELAY}ms before retrying...`
-				);
+				
 				await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
 			} catch (error) {
 				console.error("Error fetching call details:", error);
@@ -93,7 +89,6 @@ export const useChatbot = () => {
 				console.log("Assistant speech has ended.");
 			},
 			"call-start": () => {
-				console.log("Call has started.");
 
 				setState(prev => ({
 					...prev,
@@ -103,7 +98,6 @@ export const useChatbot = () => {
 				}));
 			},
 			"call-end": async () => {
-				console.log("Call has ended on frontend.");
 
 				setState(prev => ({
 					...prev,
@@ -116,10 +110,6 @@ export const useChatbot = () => {
 					return;
 				}
 
-				// Wait for initial delay before starting to poll
-				console.log(
-					`Waiting ${INITIAL_DELAY}ms before starting to poll for call status...`
-				);
 				await new Promise(resolve => setTimeout(resolve, INITIAL_DELAY));
 
 				await fetchCallDetails(callId);
@@ -157,7 +147,6 @@ export const useChatbot = () => {
 
 			const call = await vapi.start("88637c9a-3036-427f-86b2-573de84110c1");
 			if (call?.id) {
-				console.log("Call started with ID:", call.id);
 				setCallId(call.id);
 			} else {
 				throw new Error("Failed to get call ID");

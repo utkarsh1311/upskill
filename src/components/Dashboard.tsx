@@ -7,7 +7,6 @@ import Navbar from "./Navbar";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Dashboard = () => {
 	const { user } = useUser();
-	console.log("user", user);
 	return (
 		<div className="relative min-h-screen bg-white overflow-hidden">
 			<Background />
