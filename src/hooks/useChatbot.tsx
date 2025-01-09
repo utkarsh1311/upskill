@@ -4,6 +4,26 @@ import vapi from "@/lib/vapi";
 export type VoiceOption = "male" | "female";
 export type PromptOption = "prompt1" | "prompt2";
 
+interface CallDetail {
+	timestamp: number;
+	type: string;
+	analysis: {
+		summary: string;
+	};
+	artifact: {
+		transcript: string;
+	};
+	assistant: {
+		serverUrl: string;
+		endCallMessage: string;
+	};
+	summary: string;
+	transcript: string;
+	startedAt: string;
+	endedReason: string;
+	durationMinutes: number;
+}
+
 interface ChatbotState {
 	isCallStarted: boolean;
 	selectedVoice: VoiceOption | null;
@@ -11,7 +31,7 @@ interface ChatbotState {
 	isLoading: boolean;
 	error: string | null;
 	hasCallEnded: boolean;
-	callSummary: string | null;
+	callDetails: CallDetail | null;
 }
 
 const RETRY_DELAY = 1000; // 1 second between retries
@@ -20,13 +40,33 @@ const INITIAL_DELAY = 2000; // Initial delay before first try
 export const useChatbot = () => {
 	const [callId, setCallId] = useState<string | null>(null);
 	const [state, setState] = useState<ChatbotState>({
-		callSummary: null,
+		callDetails: null,
 		isCallStarted: false,
 		selectedVoice: null,
 		selectedPrompt: null,
 		isLoading: false,
 		error: null,
 		hasCallEnded: false,
+	});
+
+	const transformCallDetail = result => ({
+		timestamp: Date.now(),
+		type: result.type,
+		analysis: {
+			summary: result.analysis?.summary || "",
+		},
+		artifact: {
+			transcript: result.artifact?.transcript || "",
+		},
+		assistant: {
+			serverUrl: result.assistant?.serverUrl || "",
+			endCallMessage: result.assistant?.endCallMessage || "",
+		},
+		summary: result.summary || "",
+		transcript: result.transcript || "",
+		startedAt: result.startedAt,
+		endedReason: result.endedReason || "",
+		durationMinutes: result.durationMinutes || 0,
 	});
 
 	const fetchCallDetails = async (id: string): Promise<void> => {
@@ -44,17 +84,19 @@ export const useChatbot = () => {
 					throw new Error(`API request failed with status ${response.status}`);
 				}
 
-				const callDetails = await response.json();
+				const result = await response.json();
 
-				if (callDetails.status === "ended") {
+				if (result.status === "ended") {
+					const data = transformCallDetail(result);
+					console.log("data", data);
 					setState(prev => ({
 						...prev,
-						callSummary: callDetails.summary,
+						callDetails: data,
 					}));
-					return callDetails;
+
+					return result;
 				}
 
-				
 				await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
 			} catch (error) {
 				console.error("Error fetching call details:", error);
@@ -89,7 +131,6 @@ export const useChatbot = () => {
 				console.log("Assistant speech has ended.");
 			},
 			"call-start": () => {
-
 				setState(prev => ({
 					...prev,
 					isLoading: false,
@@ -98,7 +139,6 @@ export const useChatbot = () => {
 				}));
 			},
 			"call-end": async () => {
-
 				setState(prev => ({
 					...prev,
 					isCallStarted: false,
@@ -145,7 +185,7 @@ export const useChatbot = () => {
 				hasCallEnded: false,
 			}));
 
-			const call = await vapi.start("88637c9a-3036-427f-86b2-573de84110c1");
+			const call = await vapi.start("c341f28c-63da-4c62-82ab-af11bed7c13a");	
 			if (call?.id) {
 				setCallId(call.id);
 			} else {
@@ -192,6 +232,7 @@ export const useChatbot = () => {
 			selectedVoice: null,
 			selectedPrompt: null,
 			error: null,
+			callDetails: null,
 		}));
 		setCallId(null);
 	}, []);

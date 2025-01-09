@@ -1,0 +1,1279 @@
+{
+    "name": "Vapi, Google Sheets",
+    "flow": [
+        {
+            "id": 4,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 1414815,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 0
+                },
+                "restore": {
+                    "parameters": {
+                        "hook": {
+                            "data": {
+                                "editable": "true"
+                            },
+                            "label": "Vapi-Hook1"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook:gateway-webhook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "message",
+                        "spec": [
+                            {
+                                "name": "timestamp",
+                                "type": "number"
+                            },
+                            {
+                                "name": "type",
+                                "type": "text"
+                            },
+                            {
+                                "name": "analysis",
+                                "spec": [
+                                    {
+                                        "name": "summary",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "successEvaluation",
+                                        "type": "text"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "artifact",
+                                "spec": [
+                                    {
+                                        "name": "messages",
+                                        "spec": {
+                                            "spec": [
+                                                {
+                                                    "name": "role",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "message",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "time",
+                                                    "type": "number"
+                                                },
+                                                {
+                                                    "name": "secondsFromStart",
+                                                    "type": "number"
+                                                }
+                                            ],
+                                            "type": "collection"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "messagesOpenAIFormatted",
+                                        "spec": {
+                                            "spec": [
+                                                {
+                                                    "name": "role",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "content",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "collection"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "transcript",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "recordingUrl",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "stereoRecordingUrl",
+                                        "type": "text"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "startedAt",
+                                "type": "text"
+                            },
+                            {
+                                "name": "endedAt",
+                                "type": "text"
+                            },
+                            {
+                                "name": "endedReason",
+                                "type": "text"
+                            },
+                            {
+                                "name": "cost",
+                                "type": "number"
+                            },
+                            {
+                                "name": "costBreakdown",
+                                "spec": [
+                                    {
+                                        "name": "stt",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "llm",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "tts",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "vapi",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "total",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "llmPromptTokens",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "llmCompletionTokens",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "ttsCharacters",
+                                        "type": "number"
+                                    },
+                                    {
+                                        "name": "analysisCostBreakdown",
+                                        "spec": [
+                                            {
+                                                "name": "summary",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "summaryPromptTokens",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "summaryCompletionTokens",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "structuredData",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "structuredDataPromptTokens",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "structuredDataCompletionTokens",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "successEvaluation",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "successEvaluationPromptTokens",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "successEvaluationCompletionTokens",
+                                                "type": "number"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "costs",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "type",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "transcriber",
+                                            "spec": [
+                                                {
+                                                    "name": "provider",
+                                                    "type": "text"
+                                                },
+                                                {
+                                                    "name": "model",
+                                                    "type": "text"
+                                                }
+                                            ],
+                                            "type": "collection"
+                                        },
+                                        {
+                                            "name": "minutes",
+                                            "type": "number"
+                                        },
+                                        {
+                                            "name": "cost",
+                                            "type": "number"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "name": "durationMs",
+                                "type": "number"
+                            },
+                            {
+                                "name": "durationSeconds",
+                                "type": "number"
+                            },
+                            {
+                                "name": "durationMinutes",
+                                "type": "number"
+                            },
+                            {
+                                "name": "summary",
+                                "type": "text"
+                            },
+                            {
+                                "name": "transcript",
+                                "type": "text"
+                            },
+                            {
+                                "name": "messages",
+                                "spec": {
+                                    "spec": [
+                                        {
+                                            "name": "role",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "message",
+                                            "type": "text"
+                                        },
+                                        {
+                                            "name": "time",
+                                            "type": "number"
+                                        },
+                                        {
+                                            "name": "secondsFromStart",
+                                            "type": "number"
+                                        }
+                                    ],
+                                    "type": "collection"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "name": "recordingUrl",
+                                "type": "text"
+                            },
+                            {
+                                "name": "stereoRecordingUrl",
+                                "type": "text"
+                            },
+                            {
+                                "name": "call",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "orgId",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "type",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "monitor",
+                                        "spec": [
+                                            {
+                                                "name": "listenUrl",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "controlUrl",
+                                                "type": "text"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    },
+                                    {
+                                        "name": "transport",
+                                        "spec": [
+                                            {
+                                                "name": "assistantVideoEnabled",
+                                                "type": "boolean"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    },
+                                    {
+                                        "name": "webCallUrl",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "status",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "assistantId",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "assistantOverrides",
+                                        "spec": [
+                                            {
+                                                "name": "clientMessages",
+                                                "spec": {
+                                                    "type": "text"
+                                                },
+                                                "type": "array"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    }
+                                ],
+                                "type": "collection"
+                            },
+                            {
+                                "name": "assistant",
+                                "spec": [
+                                    {
+                                        "name": "id",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "orgId",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "name",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "voice",
+                                        "spec": [
+                                            {
+                                                "name": "model",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "voiceId",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "provider",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "stability",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "similarityBoost",
+                                                "type": "number"
+                                            },
+                                            {
+                                                "name": "fillerInjectionEnabled",
+                                                "type": "boolean"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    },
+                                    {
+                                        "name": "createdAt",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "updatedAt",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "model",
+                                        "spec": [
+                                            {
+                                                "name": "model",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "toolIds",
+                                                "spec": {
+                                                    "type": "text"
+                                                },
+                                                "type": "array"
+                                            },
+                                            {
+                                                "name": "messages",
+                                                "spec": {
+                                                    "spec": [
+                                                        {
+                                                            "name": "role",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "content",
+                                                            "type": "text"
+                                                        }
+                                                    ],
+                                                    "type": "collection"
+                                                },
+                                                "type": "array"
+                                            },
+                                            {
+                                                "name": "provider",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "emotionRecognitionEnabled",
+                                                "type": "boolean"
+                                            },
+                                            {
+                                                "name": "tools",
+                                                "spec": {
+                                                    "spec": [
+                                                        {
+                                                            "name": "id",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "createdAt",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "updatedAt",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "type",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "function",
+                                                            "spec": [
+                                                                {
+                                                                    "name": "name",
+                                                                    "type": "text"
+                                                                },
+                                                                {
+                                                                    "name": "async",
+                                                                    "type": "boolean"
+                                                                },
+                                                                {
+                                                                    "name": "parameters",
+                                                                    "spec": [
+                                                                        {
+                                                                            "name": "type",
+                                                                            "type": "text"
+                                                                        },
+                                                                        {
+                                                                            "name": "required",
+                                                                            "spec": {
+                                                                                "type": "text"
+                                                                            },
+                                                                            "type": "array"
+                                                                        },
+                                                                        {
+                                                                            "name": "properties",
+                                                                            "spec": [
+                                                                                {
+                                                                                    "name": "StartTime",
+                                                                                    "spec": [
+                                                                                        {
+                                                                                            "name": "type",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "collection"
+                                                                                },
+                                                                                {
+                                                                                    "name": "transcript",
+                                                                                    "spec": [
+                                                                                        {
+                                                                                            "name": "type",
+                                                                                            "type": "text"
+                                                                                        }
+                                                                                    ],
+                                                                                    "type": "collection"
+                                                                                }
+                                                                            ],
+                                                                            "type": "collection"
+                                                                        }
+                                                                    ],
+                                                                    "type": "collection"
+                                                                }
+                                                            ],
+                                                            "type": "collection"
+                                                        },
+                                                        {
+                                                            "name": "messages",
+                                                            "spec": {
+                                                                "spec": [
+                                                                    {
+                                                                        "name": "type",
+                                                                        "type": "text"
+                                                                    },
+                                                                    {
+                                                                        "name": "content",
+                                                                        "type": "text"
+                                                                    }
+                                                                ],
+                                                                "type": "collection"
+                                                            },
+                                                            "type": "array"
+                                                        },
+                                                        {
+                                                            "name": "orgId",
+                                                            "type": "text"
+                                                        },
+                                                        {
+                                                            "name": "server",
+                                                            "spec": [
+                                                                {
+                                                                    "name": "url",
+                                                                    "type": "text"
+                                                                }
+                                                            ],
+                                                            "type": "collection"
+                                                        },
+                                                        {
+                                                            "name": "async",
+                                                            "type": "boolean"
+                                                        }
+                                                    ],
+                                                    "type": "collection"
+                                                },
+                                                "type": "array"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    },
+                                    {
+                                        "name": "recordingEnabled",
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "name": "firstMessage",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "voicemailMessage",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "endCallFunctionEnabled",
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "name": "endCallMessage",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "transcriber",
+                                        "spec": [
+                                            {
+                                                "name": "model",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "language",
+                                                "type": "text"
+                                            },
+                                            {
+                                                "name": "provider",
+                                                "type": "text"
+                                            }
+                                        ],
+                                        "type": "collection"
+                                    },
+                                    {
+                                        "name": "clientMessages",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "serverMessages",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "serverUrl",
+                                        "type": "text"
+                                    },
+                                    {
+                                        "name": "endCallPhrases",
+                                        "spec": {
+                                            "type": "text"
+                                        },
+                                        "type": "array"
+                                    },
+                                    {
+                                        "name": "backchannelingEnabled",
+                                        "type": "boolean"
+                                    },
+                                    {
+                                        "name": "backgroundDenoisingEnabled",
+                                        "type": "boolean"
+                                    }
+                                ],
+                                "type": "collection"
+                            }
+                        ],
+                        "type": "collection"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 2,
+            "module": "google-sheets:addRow",
+            "version": 2,
+            "parameters": {
+                "__IMTCONN__": 2598150
+            },
+            "mapper": {
+                "from": "drive",
+                "mode": "select",
+                "values": {
+                    "0": "{{4.message.timestamp}}",
+                    "1": "{{4.message.type}}",
+                    "2": "{{4.message.analysis.summary}}",
+                    "3": "{{4.message.artifact.transcript}}",
+                    "4": "{{4.message.assistant.serverUrl}}",
+                    "5": "{{4.message.summary}}",
+                    "6": "{{4.message.transcript}}",
+                    "7": "{{4.message.startedAt}}",
+                    "8": "{{4.message.assistant.endCallMessage}}",
+                    "9": "{{formatDate(4.message.startedAt; \"DD.MM.YYYY - HH:mm\")}}",
+                    "10": "{{4.message.endedReason}}",
+                    "11": "{{4.message.durationMinutes}}"
+                },
+                "sheetId": "Vapi Log",
+                "spreadsheetId": "/1QPHYqLpPxiC8UzYyR7jZisvHe3wa5bSkIHlGtOgE2E8",
+                "includesHeaders": true,
+                "insertDataOption": "INSERT_ROWS",
+                "valueInputOption": "USER_ENTERED",
+                "insertUnformatted": false
+            },
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "from": {
+                            "label": "My Drive"
+                        },
+                        "mode": {
+                            "label": "Search by path"
+                        },
+                        "sheetId": {
+                            "label": "Vapi Log"
+                        },
+                        "spreadsheetId": {
+                            "path": [
+                                "Vapi Log"
+                            ]
+                        },
+                        "includesHeaders": {
+                            "label": "Yes",
+                            "nested": [
+                                {
+                                    "name": "values",
+                                    "spec": [
+                                        {
+                                            "name": "0",
+                                            "type": "text",
+                                            "label": "TimeStamp (A)"
+                                        },
+                                        {
+                                            "name": "1",
+                                            "type": "text",
+                                            "label": "Type (B)"
+                                        },
+                                        {
+                                            "name": "2",
+                                            "type": "text",
+                                            "label": "Ended Reason (C)"
+                                        },
+                                        {
+                                            "name": "3",
+                                            "type": "text",
+                                            "label": "Call (D)"
+                                        },
+                                        {
+                                            "name": "4",
+                                            "type": "text",
+                                            "label": "Recodring URL (E)"
+                                        },
+                                        {
+                                            "name": "5",
+                                            "type": "text",
+                                            "label": "Summary (F)"
+                                        },
+                                        {
+                                            "name": "6",
+                                            "type": "text",
+                                            "label": "Transcript (G)"
+                                        },
+                                        {
+                                            "name": "7",
+                                            "type": "text",
+                                            "label": "Message List (H)"
+                                        },
+                                        {
+                                            "name": "8",
+                                            "type": "text",
+                                            "label": "Message List -1 (I)"
+                                        },
+                                        {
+                                            "name": "9",
+                                            "type": "text",
+                                            "label": "DateTime (J)"
+                                        },
+                                        {
+                                            "name": "10",
+                                            "type": "text",
+                                            "label": "(K)"
+                                        },
+                                        {
+                                            "name": "11",
+                                            "type": "text",
+                                            "label": "(L)"
+                                        },
+                                        {
+                                            "name": "12",
+                                            "type": "text",
+                                            "label": "(M)"
+                                        },
+                                        {
+                                            "name": "13",
+                                            "type": "text",
+                                            "label": "(N)"
+                                        },
+                                        {
+                                            "name": "14",
+                                            "type": "text",
+                                            "label": "(O)"
+                                        },
+                                        {
+                                            "name": "15",
+                                            "type": "text",
+                                            "label": "(P)"
+                                        },
+                                        {
+                                            "name": "16",
+                                            "type": "text",
+                                            "label": "(Q)"
+                                        },
+                                        {
+                                            "name": "17",
+                                            "type": "text",
+                                            "label": "(R)"
+                                        },
+                                        {
+                                            "name": "18",
+                                            "type": "text",
+                                            "label": "(S)"
+                                        },
+                                        {
+                                            "name": "19",
+                                            "type": "text",
+                                            "label": "(T)"
+                                        },
+                                        {
+                                            "name": "20",
+                                            "type": "text",
+                                            "label": "(U)"
+                                        },
+                                        {
+                                            "name": "21",
+                                            "type": "text",
+                                            "label": "(V)"
+                                        },
+                                        {
+                                            "name": "22",
+                                            "type": "text",
+                                            "label": "(W)"
+                                        },
+                                        {
+                                            "name": "23",
+                                            "type": "text",
+                                            "label": "(X)"
+                                        },
+                                        {
+                                            "name": "24",
+                                            "type": "text",
+                                            "label": "(Y)"
+                                        },
+                                        {
+                                            "name": "25",
+                                            "type": "text",
+                                            "label": "(Z)"
+                                        }
+                                    ],
+                                    "type": "collection",
+                                    "label": "Values"
+                                }
+                            ]
+                        },
+                        "insertDataOption": {
+                            "mode": "chose",
+                            "label": "Insert rows"
+                        },
+                        "valueInputOption": {
+                            "mode": "chose",
+                            "label": "User entered"
+                        },
+                        "insertUnformatted": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "__IMTCONN__": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google"
+                            },
+                            "label": "student.upskill (students.upskillclasses@gmail.com)"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTCONN__",
+                        "type": "account:google",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "mode",
+                        "type": "select",
+                        "label": "Search Method",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "select",
+                                "fromAll",
+                                "map"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertUnformatted",
+                        "type": "boolean",
+                        "label": "Unformatted",
+                        "required": true
+                    },
+                    {
+                        "name": "valueInputOption",
+                        "type": "select",
+                        "label": "Value input option",
+                        "validate": {
+                            "enum": [
+                                "USER_ENTERED",
+                                "RAW"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "insertDataOption",
+                        "type": "select",
+                        "label": "Insert data option",
+                        "validate": {
+                            "enum": [
+                                "INSERT_ROWS",
+                                "OVERWRITE"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "type": "select",
+                        "label": "Drive",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                "drive",
+                                "share",
+                                "team"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "spreadsheetId",
+                        "type": "file",
+                        "label": "Spreadsheet ID",
+                        "required": true
+                    },
+                    {
+                        "name": "sheetId",
+                        "type": "select",
+                        "label": "Sheet Name",
+                        "required": true
+                    },
+                    {
+                        "name": "includesHeaders",
+                        "type": "select",
+                        "label": "Table contains headers",
+                        "required": true,
+                        "validate": {
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    },
+                    {
+                        "name": "values",
+                        "spec": [
+                            {
+                                "name": "0",
+                                "type": "text",
+                                "label": "TimeStamp (A)"
+                            },
+                            {
+                                "name": "1",
+                                "type": "text",
+                                "label": "Type (B)"
+                            },
+                            {
+                                "name": "2",
+                                "type": "text",
+                                "label": "Ended Reason (C)"
+                            },
+                            {
+                                "name": "3",
+                                "type": "text",
+                                "label": "Call (D)"
+                            },
+                            {
+                                "name": "4",
+                                "type": "text",
+                                "label": "Recodring URL (E)"
+                            },
+                            {
+                                "name": "5",
+                                "type": "text",
+                                "label": "Summary (F)"
+                            },
+                            {
+                                "name": "6",
+                                "type": "text",
+                                "label": "Transcript (G)"
+                            },
+                            {
+                                "name": "7",
+                                "type": "text",
+                                "label": "Message List (H)"
+                            },
+                            {
+                                "name": "8",
+                                "type": "text",
+                                "label": "Message List -1 (I)"
+                            },
+                            {
+                                "name": "9",
+                                "type": "text",
+                                "label": "DateTime (J)"
+                            },
+                            {
+                                "name": "10",
+                                "type": "text",
+                                "label": "(K)"
+                            },
+                            {
+                                "name": "11",
+                                "type": "text",
+                                "label": "(L)"
+                            },
+                            {
+                                "name": "12",
+                                "type": "text",
+                                "label": "(M)"
+                            },
+                            {
+                                "name": "13",
+                                "type": "text",
+                                "label": "(N)"
+                            },
+                            {
+                                "name": "14",
+                                "type": "text",
+                                "label": "(O)"
+                            },
+                            {
+                                "name": "15",
+                                "type": "text",
+                                "label": "(P)"
+                            },
+                            {
+                                "name": "16",
+                                "type": "text",
+                                "label": "(Q)"
+                            },
+                            {
+                                "name": "17",
+                                "type": "text",
+                                "label": "(R)"
+                            },
+                            {
+                                "name": "18",
+                                "type": "text",
+                                "label": "(S)"
+                            },
+                            {
+                                "name": "19",
+                                "type": "text",
+                                "label": "(T)"
+                            },
+                            {
+                                "name": "20",
+                                "type": "text",
+                                "label": "(U)"
+                            },
+                            {
+                                "name": "21",
+                                "type": "text",
+                                "label": "(V)"
+                            },
+                            {
+                                "name": "22",
+                                "type": "text",
+                                "label": "(W)"
+                            },
+                            {
+                                "name": "23",
+                                "type": "text",
+                                "label": "(X)"
+                            },
+                            {
+                                "name": "24",
+                                "type": "text",
+                                "label": "(Y)"
+                            },
+                            {
+                                "name": "25",
+                                "type": "text",
+                                "label": "(Z)"
+                            }
+                        ],
+                        "type": "collection",
+                        "label": "Values"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "google-email:ActionSendEmail",
+            "version": 2,
+            "parameters": {
+                "account": 4625509
+            },
+            "mapper": {
+                "cc": [],
+                "to": [
+                    "sandeepkumar.may07@gmail.com"
+                ],
+                "bcc": [],
+                "from": "",
+                "html": "<h3> {{4.message.endedAt}}</H3> {{4.message.summary}}",
+                "subject": "Feedback - Mock Class",
+                "attachments": []
+            },
+            "metadata": {
+                "designer": {
+                    "x": 600,
+                    "y": 0
+                },
+                "restore": {
+                    "expect": {
+                        "cc": {
+                            "mode": "chose"
+                        },
+                        "to": {
+                            "mode": "chose",
+                            "items": [
+                                null
+                            ]
+                        },
+                        "bcc": {
+                            "mode": "chose"
+                        },
+                        "attachments": {
+                            "mode": "chose"
+                        }
+                    },
+                    "parameters": {
+                        "account": {
+                            "data": {
+                                "scoped": "true",
+                                "connection": "google-restricted"
+                            },
+                            "label": "Email-student@upskill"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "account",
+                        "type": "account:google-restricted",
+                        "label": "Connection",
+                        "required": true
+                    }
+                ],
+                "expect": [
+                    {
+                        "name": "from",
+                        "type": "text",
+                        "label": "From"
+                    },
+                    {
+                        "name": "to",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address",
+                            "required": true
+                        },
+                        "type": "array",
+                        "label": "To",
+                        "required": true
+                    },
+                    {
+                        "name": "subject",
+                        "type": "text",
+                        "label": "Subject"
+                    },
+                    {
+                        "name": "html",
+                        "type": "text",
+                        "label": "Content"
+                    },
+                    {
+                        "name": "attachments",
+                        "spec": [
+                            {
+                                "name": "fileName",
+                                "type": "filename",
+                                "label": "File name",
+                                "required": true,
+                                "semantic": "file:name"
+                            },
+                            {
+                                "name": "data",
+                                "type": "buffer",
+                                "label": "Data",
+                                "required": true,
+                                "semantic": "file:data"
+                            },
+                            {
+                                "name": "cid",
+                                "type": "text",
+                                "label": "Content-ID"
+                            }
+                        ],
+                        "type": "array",
+                        "label": "Attachments"
+                    },
+                    {
+                        "name": "cc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Copy recipient"
+                    },
+                    {
+                        "name": "bcc",
+                        "spec": {
+                            "name": "value",
+                            "type": "email",
+                            "label": "Email address"
+                        },
+                        "type": "array",
+                        "label": "Blind copy recipient"
+                    }
+                ]
+            }
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu2.make.com",
+        "notes": []
+    }
+}

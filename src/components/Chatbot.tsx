@@ -1,3 +1,5 @@
+import OngoingCall from "@/components/OngoingCall";
+import { Button } from "@/components/ui/button";
 import {
 	Select,
 	SelectContent,
@@ -5,12 +7,14 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import OngoingCall from "@/components/OngoingCall";
 import { useChatbot } from "@/hooks/useChatbot";
+import { useUser } from "@clerk/clerk-react";
+import { useEffect } from "react";
+
 
 const Chatbot = () => {
-	
+	const { user } = useUser();
+
 	const {
 		isCallStarted,
 		selectedVoice,
@@ -18,14 +22,50 @@ const Chatbot = () => {
 		isLoading,
 		error,
 		hasCallEnded,
-		callSummary,
+		callDetails,
 		handleCallStart,
 		handleCallEnd,
 		handleVoiceChange,
 		handlePromptChange,
 		handleReset,
 		isStartDisabled,
-	} = useChatbot();
+	} = useChatbot()
+
+	useEffect(() => {
+		const sendMail = async () => {
+			try {
+				const payload = {
+					message: {
+						...callDetails,
+						email: user?.emailAddresses[0].emailAddress,
+					},
+				};
+
+				const response = await fetch(import.meta.env.VITE_MAKE_URL, {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(payload),
+				});
+
+				if (!response.ok) {
+					console.error("Failed to send email");
+				}
+
+				const data = await response.json();
+				console.log(data);
+			} catch (error) {
+				console.error(
+					error instanceof Error ? error.message : "Failed to send email"
+				);
+			}
+		};
+
+		if (hasCallEnded && callDetails) {
+			sendMail();
+		}
+	}, [hasCallEnded, callDetails, user]);
 
 	const renderContent = () => {
 		if (isCallStarted) {
@@ -33,7 +73,7 @@ const Chatbot = () => {
 		}
 
 		if (hasCallEnded) {
-			if (callSummary) {
+			if (callDetails) {
 				return (
 					<div className="px-4">
 						<h2 className="text-2xl font-bold text-blue-500 mb-4">
@@ -42,7 +82,7 @@ const Chatbot = () => {
 						<div>
 							<div className="prose max-h-[300px] overflow-y-auto mb-8 w-full rounded-md scrollbar ">
 								<pre className="text-wrap bg-white text-black font-primary prose">
-									{callSummary}
+									{callDetails.summary}
 								</pre>
 							</div>
 						</div>
