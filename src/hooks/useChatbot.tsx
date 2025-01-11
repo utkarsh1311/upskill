@@ -100,11 +100,11 @@ export const useChatbot = () => {
         }
 
         const result = await response.json();
-        console.log("result", result);
+       
 
         if (result.status === "ended") {
           const data = transformCallDetail(result);
-          console.log("data", data);
+          
           setState(prev => ({
             ...prev,
             callDetails: data,
@@ -147,7 +147,7 @@ export const useChatbot = () => {
           assistantName: assistant.name,
         }));
 
-        console.log("list", list);
+
         setState(prev => ({
           ...prev,
           assistants: list,

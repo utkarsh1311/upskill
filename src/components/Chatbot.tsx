@@ -52,8 +52,8 @@ const Chatbot = () => {
 					console.error("Failed to send email");
 				}
 
-				const data = await response.json();
-				console.log(data);
+					
+			
 			} catch (error) {
 				console.error(
 					error instanceof Error ? error.message : "Failed to send email"
@@ -102,7 +102,7 @@ const Chatbot = () => {
 							a => a.assistantId === assistantId
 						);
 						if (selectedAssistant) {
-							console.log("selectedAssistant", selectedAssistant);
+							
 							handleAssistantChange(selectedAssistant);
 						}
 					}}
