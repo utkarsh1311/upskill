@@ -1,7 +1,7 @@
 import { avatar2 } from "@/assets";
 import { useUser } from "@clerk/clerk-react";
 import Background from "./Background";
-import ChatbotConfig from "./Chatbot";
+import Chatbot from "./Chatbot";
 import Navbar from "./Navbar";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -18,7 +18,7 @@ const Dashboard = () => {
 					</p>
 				</div>
 				<div className="w-full grid grid-cols-3 mt-10">
-					<ChatbotConfig />
+					<Chatbot />
 					<div className="col-span-1 grid place-content-center">
 						<img src={avatar2} className="w-4/5" alt="placeholder" />
 					</div>

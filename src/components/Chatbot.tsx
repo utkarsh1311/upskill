@@ -10,26 +10,25 @@ import {
 import { useChatbot } from "@/hooks/useChatbot";
 import { useUser } from "@clerk/clerk-react";
 import { useEffect } from "react";
-
+import CallSummary from "./CallSummary";
 
 const Chatbot = () => {
 	const { user } = useUser();
 
 	const {
 		isCallStarted,
-		selectedVoice,
-		selectedPrompt,
+		currentAssistant,
+		assistants,
 		isLoading,
 		error,
 		hasCallEnded,
 		callDetails,
 		handleCallStart,
 		handleCallEnd,
-		handleVoiceChange,
-		handlePromptChange,
+		handleAssistantChange,
 		handleReset,
 		isStartDisabled,
-	} = useChatbot()
+	} = useChatbot();
 
 	useEffect(() => {
 		const sendMail = async () => {
@@ -75,28 +74,9 @@ const Chatbot = () => {
 		if (hasCallEnded) {
 			if (callDetails) {
 				return (
-					<div className="px-4">
-						<h2 className="text-2xl font-bold text-blue-500 mb-4">
-							Call Evaluation Summary
-						</h2>
-						<div>
-							<div className="prose max-h-[300px] overflow-y-auto mb-8 w-full rounded-md scrollbar ">
-								<pre className="text-wrap bg-white text-black font-primary prose">
-									{callDetails.summary}
-								</pre>
-							</div>
-						</div>
-						<Button
-							onClick={handleReset}
-							size="lg"
-							className="bg-gradient-to-r from-blue-500 to-indigo-500"
-						>
-							Start New Call
-						</Button>
-					</div>
+					<CallSummary callDetails={callDetails} handleReset={handleReset} />
 				);
 			} else {
-				// return a loading spinner saying "Evaluation in progress..."
 				return (
 					<div className="text-center">
 						<h2 className="text-2xl font-bold text-blue-600 mb-4">
@@ -116,28 +96,29 @@ const Chatbot = () => {
 					Configure the Chatbot
 				</h1>
 				<Select
-					value={selectedVoice ?? undefined}
-					onValueChange={handleVoiceChange}
+					value={currentAssistant?.assistantId || ""}
+					onValueChange={assistantId => {
+						const selectedAssistant = assistants?.find(
+							a => a.assistantId === assistantId
+						);
+						if (selectedAssistant) {
+							console.log("selectedAssistant", selectedAssistant);
+							handleAssistantChange(selectedAssistant);
+						}
+					}}
 				>
-					<SelectTrigger className="p-6 shadow-sm">
-						<SelectValue placeholder="Select the voice for the chatbot" />
+					<SelectTrigger className="p-6 shadow-sm border-gray-200 hover:border-blue-400 transition-colors">
+						<SelectValue placeholder="Select the voice for the assistant" />
 					</SelectTrigger>
 					<SelectContent>
-						<SelectItem value="male">Male Voice</SelectItem>
-						<SelectItem value="female">Female Voice</SelectItem>
-					</SelectContent>
-				</Select>
-
-				<Select
-					value={selectedPrompt ?? undefined}
-					onValueChange={handlePromptChange}
-				>
-					<SelectTrigger className="p-6 shadow-sm">
-						<SelectValue placeholder="Select the prompt" />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectItem value="prompt1">Prompt 1 for the student</SelectItem>
-						<SelectItem value="prompt2">Prompt 2 for the student</SelectItem>
+						{assistants?.map(assistant => (
+							<SelectItem
+								key={assistant.assistantId}
+								value={assistant.assistantId}
+							>
+								{assistant.assistantName}
+							</SelectItem>
+						))}
 					</SelectContent>
 				</Select>
 				<Button
