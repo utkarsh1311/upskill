@@ -92,7 +92,7 @@ const Chatbot = () => {
 
 		return (
 			<div className="flex-1 flex flex-col justify-center">
-				<h1 className="text-3xl font-bold text-blue-500 mb-auto mt-10 ">
+				<h1 className="text-3xl font-bold text-blue-500 my-auto ">
 					Configure the Chatbot
 				</h1>
 				<Select
