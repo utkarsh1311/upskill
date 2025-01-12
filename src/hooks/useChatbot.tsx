@@ -9,16 +9,17 @@ interface ChatAssistant {
 interface CallDetail {
   timestamp: number;
   type: string;
-  analysis: {
-    summary: string;
-  };
-  artifact: {
-    transcript: string;
-  };
-  assistant: {
-    serverUrl: string;
-    endCallMessage: string;
-  };
+  // analysis: {
+  //   summary: string;
+  // };
+  // artifact: {
+  //   transcript: string;
+  // };
+  // assistant: {
+  //   serverUrl: string;
+  //   endCallMessage: string;
+  // };
+  successEvaluation: string;
   summary: string;
   transcript: string;
   startedAt: string;
@@ -57,23 +58,24 @@ export const useChatbot = () => {
     const start = new Date(startedAt).getTime();
     const end = new Date(endedAt).getTime();
     const durationMs = end - start;
-    return Number((durationMs / (1000 * 60)).toFixed(2)); // Convert to minutes and round to 2 decimal places
+    return Number((durationMs / (1000 * 60)).toFixed(2)); 
 	};
 	
 
   const transformCallDetail = (result) => ({
     timestamp: Date.now(),
     type: result.type,
-    analysis: {
-      summary: result.analysis?.summary || "",
-    },
-    artifact: {
-      transcript: result.artifact?.transcript || "",
-    },
-    assistant: {
-      serverUrl: result.assistant?.serverUrl || "",
-      endCallMessage: result.assistant?.endCallMessage || "",
-    },
+    // analysis: {
+    //   summary: result.analysis?.summary || "",
+    // },
+    // artifact: {
+    //   transcript: result.artifact?.transcript || "",
+    // },
+    // assistant: {
+    //   serverUrl: result.assistant?.serverUrl || "",
+    //   endCallMessage: result.assistant?.endCallMessage || "",
+    // },
+    successEvaluation: result.analysis?.successEvaluation || "",
     summary: result.summary || "",
     transcript: result.transcript || "",
     startedAt: result.startedAt,

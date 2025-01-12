@@ -4,7 +4,6 @@ import Background from "./Background";
 import Chatbot from "./Chatbot";
 import Navbar from "./Navbar";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Dashboard = () => {
 	const { user } = useUser();
 	return (
@@ -14,14 +13,14 @@ const Dashboard = () => {
 				<Navbar />
 				<div className="mt-10">
 					<p className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-800">
-						Welcome {user?.firstName}!
+						Welcome, {user.fullName}
 					</p>
-				</div>
 				<div className="w-full grid grid-cols-3 mt-10">
 					<Chatbot />
-					<div className="col-span-1 grid place-content-center">
-						<img src={avatar2} className="w-4/5" alt="placeholder" />
+					<div className="col-span-1 grid place-content-center md:hidden ">
+						<img src={avatar2} className="" alt="placeholder" />
 					</div>
+				</div>
 				</div>
 			</div>
 		</div>

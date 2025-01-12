@@ -39,7 +39,6 @@ const Chatbot = () => {
 						email: user?.emailAddresses[0].emailAddress,
 					},
 				};
-
 				const response = await fetch(import.meta.env.VITE_MAKE_URL, {
 					method: "POST",
 					headers: {
@@ -48,12 +47,13 @@ const Chatbot = () => {
 					body: JSON.stringify(payload),
 				});
 
+				if (response.status === 200) {
+					console.log("Sent successfully");
+				}
+
 				if (!response.ok) {
 					console.error("Failed to send email");
 				}
-
-					
-			
 			} catch (error) {
 				console.error(
 					error instanceof Error ? error.message : "Failed to send email"
@@ -91,8 +91,8 @@ const Chatbot = () => {
 		}
 
 		return (
-			<>
-				<h1 className="text-3xl font-bold text-blue-500 mb-5">
+			<div className="flex-1 flex flex-col justify-center">
+				<h1 className="text-3xl font-bold text-blue-500 mb-auto mt-10 ">
 					Configure the Chatbot
 				</h1>
 				<Select
@@ -102,7 +102,6 @@ const Chatbot = () => {
 							a => a.assistantId === assistantId
 						);
 						if (selectedAssistant) {
-							
 							handleAssistantChange(selectedAssistant);
 						}
 					}}
@@ -125,7 +124,7 @@ const Chatbot = () => {
 					onClick={handleCallStart}
 					size="lg"
 					disabled={isStartDisabled}
-					className={`mt-10 text-lg w-full ${
+					className={`mt-10 text-lg w-full mb-auto ${
 						isStartDisabled
 							? "bg-gray-300"
 							: "bg-gradient-to-r from-blue-500 to-indigo-500"
@@ -133,12 +132,12 @@ const Chatbot = () => {
 				>
 					{isLoading ? "Starting Call..." : "Start Call"}
 				</Button>
-			</>
+			</div>
 		);
 	};
 
 	return (
-		<div className="col-span-2 rounded-md border bg-white shadow-md p-8 flex gap-4 flex-col justify-center h-[500px]">
+		<div className="col-span-2 rounded-md  border-2 shadow-sm py-2 px-8 flex gap-4 flex-col justify-center h-[500px] bg-white">
 			{error && (
 				<div className="bg-red-50 text-red-500 p-4 rounded-md mb-4">
 					{error}
