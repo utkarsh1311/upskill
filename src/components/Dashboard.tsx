@@ -23,6 +23,14 @@ const Dashboard = () => {
 				</div>
 				</div>
 			</div>
+			<footer className="absolute inset-x-0 bottom-0 md:relative md:mt-8">
+				<div className="bg-gray-800 text-white text-center py-3">
+					<p className="text-sm px-4">
+						&copy; 2025 UpSkill Classes. Empowering individuals to communicate
+						with confidence.
+					</p>
+				</div>
+			</footer>
 		</div>
 	);
 };
